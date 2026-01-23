@@ -8,6 +8,12 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    /**
+     * Login with validation of users credential from the login form
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function login(Request $request)
     {
          $data = $request->validate([
@@ -21,10 +27,23 @@ class UserController extends Controller
 
          return redirect('/');
     }
+
+    /**
+     * Show form to register new user
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showRegisterUserForm()
     {
         return view('users.register-user');
     }
+
+    /**
+     * Save new user from registration form
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -41,6 +60,11 @@ class UserController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Log out the user from the application
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function logout()
     {
         auth()->logout();

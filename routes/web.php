@@ -1,25 +1,26 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $tasks = Task::all();
-    return view('home', ['tasks' => $tasks]);
-});
 
+// Home page
+Route::get('/', [HomeController::class, 'index']);
 
+// User registration and login
 Route::get('/register', [UserController::class, 'showRegisterUserForm']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'login']);
 
 // Task related routes
-Route::get('/create-task', [TaskController::class, 'showCreateTask']);
-Route::get('/create-task', [TaskController::class, 'showCreateTask']);
-Route::post('/create-task', [TaskController::class, 'createTask']);
-Route::get('/edit-task/{task}', [TaskController::class, 'showEditTask']);
-Route::put('/edit-task/{task}', [TaskController::class, 'updateTask']);
-Route::delete('/delete-task/{task}', [TaskController::class, 'deleteTask']);
+Route::prefix('/task')->group(function () {
+    Route::get('/create', [TaskController::class, 'showCreateTask']);
+    Route::post('/create', [TaskController::class, 'createTask']);
+    Route::get('/read/{task}', [TaskController::class, 'showTasksReadOnly']);
+    Route::get('/edit/{task}', [TaskController::class, 'showEditTask']);
+    Route::put('/edit/{task}', [TaskController::class, 'updateTask']);
+    Route::delete('/delete/{task}', [TaskController::class, 'deleteTask']);
+});
