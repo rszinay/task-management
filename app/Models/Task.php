@@ -23,8 +23,43 @@ class Task extends Model
         'user_id'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * List of all task statuses
+     *
+     * @var array[]
+     */
+    public static $statuses = [
+        [
+            'id'    => 1,
+            'label' => 'Todo',
+        ],
+        [
+            'id'    => 2,
+            'label' => 'Doing',
+        ],
+        [
+            'id'    => 3,
+            'label' => 'Done',
+        ]
+    ];
+
+    /**
+     * List task status labels
+     *
+     * @var string[]
+     */
+    public static $statusLabels = [
+        1 => 'Todo',
+        2 => 'Doing',
+        3 => 'Done'
+    ];
+
 }
